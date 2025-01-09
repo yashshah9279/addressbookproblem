@@ -2,39 +2,49 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        AddressBook a1 = new AddressBook();
+        AddressBook addressBook = new AddressBook();
         Scanner sc = new Scanner(System.in);
-        System.out.println("Welcome to Address book");
-        do {
+
+        System.out.println("Welcome to Address Book!");
+
+        while (true) {
             System.out.println(
-                    "Enter 1 to create a new contact" +
-                    "\nEnter 2 to display existing contacts" +
-                    "\nEnter 3 to edit an existing contact" +
-                    "\nEnter 4 to delete an existing contact" +
-                    "\nEnter 0 to exit"
+                    "\nMenu:" +
+                    "\n1. Create a new contact" +
+                    "\n2. Display existing contacts" +
+                    "\n3. Edit an existing contact" +
+                    "\n4. Delete an existing contact" +
+                    "\n5. Add multiple contacts" +
+                    "\n0. Exit"
             );
+            System.out.print("Enter your choice: ");
             int input = sc.nextInt();
 
             switch (input) {
-                case 1 -> a1.createContact();
-                case 2 -> a1.display();
+                case 1 -> addressBook.createContact();
+                case 2 -> addressBook.display();
                 case 3 -> {
-                    System.out.println("Enter first and last name of contact to edit");
+                    System.out.print("Enter the first name of the contact to edit: ");
                     String firstName = sc.next();
+                    System.out.print("Enter the last name of the contact to edit: ");
                     String lastName = sc.next();
-                    a1.editContact(firstName, lastName);
+                    addressBook.editContact(firstName, lastName);
                 }
                 case 4 -> {
-                    System.out.println("Enter first and last name of contact to delete");
+                    System.out.print("Enter the first name of the contact to delete: ");
                     String firstName = sc.next();
+                    System.out.print("Enter the last name of the contact to delete: ");
                     String lastName = sc.next();
-                    a1.deleteContact(firstName, lastName);
+                    addressBook.deleteContact(firstName, lastName);
                 }
-                case 0 -> System.exit(0);
-                default -> System.out.println("Wrong Input");
+                case 5 -> addressBook.createMultipleContacts();
+                case 0 -> {
+                    System.out.println("Thank you for using Address Book!");
+                    sc.close();
+                    System.exit(0);
+                }
+                default -> System.out.println("Invalid input. Please try again.");
             }
-
-            System.out.println("Enter 0 to exit");
-        } while (true);
+        }
     }
 }
