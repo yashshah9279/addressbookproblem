@@ -4,11 +4,12 @@ import java.util.Scanner;
 
 public class AddressBook {
     List<Contact> adBook = new ArrayList<>();
-    public void display(){
+
+    public void display() {
         System.out.println(adBook);
     }
 
-    // USE CASE 1
+    // USE CASE 1: Create a new contact
     public void createContact() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter First name");
@@ -28,5 +29,27 @@ public class AddressBook {
         Contact c1 = new Contact(name, lname, city, state, email, phone, zip);
         adBook.add(c1);
         System.out.println("Contact is added");
+    }
+
+    // USE CASE 2: Edit an existing contact
+    public void editContact(String firstName, String lastName) {
+        for (Contact contact : adBook) {
+            if (contact.firstName.equalsIgnoreCase(firstName) && contact.lastName.equalsIgnoreCase(lastName)) {
+                Scanner sc = new Scanner(System.in);
+                System.out.println("Enter updated City");
+                contact.city = sc.next();
+                System.out.println("Enter updated State");
+                contact.state = sc.next();
+                System.out.println("Enter updated Email");
+                contact.email = sc.next();
+                System.out.println("Enter updated Phone");
+                contact.phone = sc.nextLong();
+                System.out.println("Enter updated Zip");
+                contact.zip = sc.nextInt();
+                System.out.println("Contact updated successfully");
+                return;
+            }
+        }
+        System.out.println("Contact not found");
     }
 }
