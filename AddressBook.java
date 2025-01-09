@@ -4,11 +4,12 @@ import java.util.Scanner;
 
 public class AddressBook {
     List<Contact> adBook = new ArrayList<>();
-    public void display(){
+
+    public void display() {
         System.out.println(adBook);
     }
 
-    // USE CASE 1
+    // USE CASE 1: Create a new contact
     public void createContact() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter First name");
@@ -30,7 +31,7 @@ public class AddressBook {
         System.out.println("Contact is added");
     }
 
-    // USE CASE 2
+    // USE CASE 2: Edit an existing contact
     public void editContact(String firstName, String lastName) {
         for (Contact contact : adBook) {
             if (contact.firstName.equalsIgnoreCase(firstName) && contact.lastName.equalsIgnoreCase(lastName)) {
