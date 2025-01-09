@@ -2,39 +2,42 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        //Refactoring the Main file
+        // Initializing the Address Book System
         AddressBookSystem system = new AddressBookSystem();
         Scanner sc = new Scanner(System.in);
         AddressBook currentAddressBook = null;
 
-        System.out.println("Welcome to the Address Book System");
+        System.out.println("Welcome to the Address Book System!");
 
         while (true) {
             System.out.println(
-                    "Enter 1 to create a new Address Book" +
-                    "\nEnter 2 to select an Address Book" +
-                    "\nEnter 3 to add a contact to the selected Address Book" +
-                    "\nEnter 4 to display contacts in the selected Address Book" +
-                    "\nEnter 5 to add multiple contacts" +
-                    "\nEnter 0 to exit"
+                    "\nMenu:" +
+                    "\n1. Create a new Address Book" +
+                    "\n2. Select an Address Book" +
+                    "\n3. Add a contact to the selected Address Book" +
+                    "\n4. Display contacts in the selected Address Book" +
+                    "\n5. Add multiple contacts to the selected Address Book" +
+                    "\n0. Exit"
             );
+            System.out.print("Enter your choice: ");
             int input = sc.nextInt();
 
             switch (input) {
                 case 1 -> {
-                    System.out.println("Enter the name of the new Address Book:");
+                    System.out.print("Enter the name of the new Address Book: ");
                     String name = sc.next();
                     system.addAddressBook(name);
+                    System.out.println("Address Book '" + name + "' created successfully.");
                 }
                 case 2 -> {
                     system.displayAddressBooks();
-                    System.out.println("Enter the name of the Address Book to select:");
+                    System.out.print("Enter the name of the Address Book to select: ");
                     String name = sc.next();
                     currentAddressBook = system.getAddressBook(name);
-                    if (currentAddressBook == null) {
-                        System.out.println("No Address Book found with the name '" + name + "'.");
-                    } else {
+                    if (currentAddressBook != null) {
                         System.out.println("Address Book '" + name + "' selected.");
+                    } else {
+                        System.out.println("No Address Book found with the name '" + name + "'.");
                     }
                 }
                 case 3 -> {
@@ -59,12 +62,11 @@ public class Main {
                     }
                 }
                 case 0 -> {
-                    System.out.println("Exiting the Address Book System. Bye Bye, Visit Again!");
-                    System.exit(0);
+                    System.out.println("Exiting the Address Book System. Goodbye!");
                     sc.close();
-                    return;
+                    System.exit(0);
                 }
-                default -> System.out.println("Wrong Input");
+                default -> System.out.println("Invalid input. Please try again.");
             }
         }
     }
