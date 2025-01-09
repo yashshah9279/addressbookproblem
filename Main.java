@@ -2,48 +2,69 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        AddressBook addressBook = new AddressBook();
+        //Refactoring the Main file
+        AddressBookSystem system = new AddressBookSystem();
         Scanner sc = new Scanner(System.in);
+        AddressBook currentAddressBook = null;
 
-        System.out.println("Welcome to Address Book!");
+        System.out.println("Welcome to the Address Book System");
 
         while (true) {
             System.out.println(
-                    "\nMenu:" +
-                    "\n1. Create a new contact" +
-                    "\n2. Display existing contacts" +
-                    "\n3. Edit an existing contact" +
-                    "\n4. Delete an existing contact" +
-                    "\n5. Add multiple contacts" +
-                    "\n0. Exit"
+                    "Enter 1 to create a new Address Book" +
+                    "\nEnter 2 to select an Address Book" +
+                    "\nEnter 3 to add a contact to the selected Address Book" +
+                    "\nEnter 4 to display contacts in the selected Address Book" +
+                    "\nEnter 5 to add multiple contacts" +
+                    "\nEnter 0 to exit"
             );
-            System.out.print("Enter your choice: ");
             int input = sc.nextInt();
 
             switch (input) {
-                case 1 -> addressBook.createContact();
-                case 2 -> addressBook.display();
+                case 1 -> {
+                    System.out.println("Enter the name of the new Address Book:");
+                    String name = sc.next();
+                    system.addAddressBook(name);
+                }
+                case 2 -> {
+                    system.displayAddressBooks();
+                    System.out.println("Enter the name of the Address Book to select:");
+                    String name = sc.next();
+                    currentAddressBook = system.getAddressBook(name);
+                    if (currentAddressBook == null) {
+                        System.out.println("No Address Book found with the name '" + name + "'.");
+                    } else {
+                        System.out.println("Address Book '" + name + "' selected.");
+                    }
+                }
                 case 3 -> {
-                    System.out.print("Enter the first name of the contact to edit: ");
-                    String firstName = sc.next();
-                    System.out.print("Enter the last name of the contact to edit: ");
-                    String lastName = sc.next();
-                    addressBook.editContact(firstName, lastName);
+                    if (currentAddressBook != null) {
+                        currentAddressBook.createContact();
+                    } else {
+                        System.out.println("No Address Book is currently selected. Please select or create one first.");
+                    }
                 }
                 case 4 -> {
-                    System.out.print("Enter the first name of the contact to delete: ");
-                    String firstName = sc.next();
-                    System.out.print("Enter the last name of the contact to delete: ");
-                    String lastName = sc.next();
-                    addressBook.deleteContact(firstName, lastName);
+                    if (currentAddressBook != null) {
+                        currentAddressBook.display();
+                    } else {
+                        System.out.println("No Address Book is currently selected. Please select or create one first.");
+                    }
                 }
-                case 5 -> addressBook.createMultipleContacts();
+                case 5 -> {
+                    if (currentAddressBook != null) {
+                        currentAddressBook.createMultipleContacts();
+                    } else {
+                        System.out.println("No Address Book is currently selected. Please select or create one first.");
+                    }
+                }
                 case 0 -> {
-                    System.out.println("Thank you for using Address Book!");
-                    sc.close();
+                    System.out.println("Exiting the Address Book System. Bye Bye, Visit Again!");
                     System.exit(0);
+                    sc.close();
+                    return;
                 }
-                default -> System.out.println("Invalid input. Please try again.");
+                default -> System.out.println("Wrong Input");
             }
         }
     }
