@@ -1,71 +1,54 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
-public class Main {
-    public static void main(String[] args) {
-        //Refactoring the Main file
-        AddressBookSystem system = new AddressBookSystem();
+public class AddressBook {
+    List<Contact> adBook = new ArrayList<>();
+    public void display(){
+        System.out.println(adBook);
+    }
+
+    // USE CASE 1
+    public void createContact() {
         Scanner sc = new Scanner(System.in);
-        AddressBook currentAddressBook = null;
+        System.out.println("Enter First name");
+        String name = sc.next();
+        System.out.println("Enter Last name");
+        String lname = sc.next();
+        System.out.println("Enter City");
+        String city = sc.next();
+        System.out.println("Enter State");
+        String state = sc.next();
+        System.out.println("Enter Email ID");
+        String email = sc.next();
+        System.out.println("Enter Phone no.");
+        long phone = sc.nextLong();
+        System.out.println("Enter ZipCode");
+        int zip = sc.nextInt();
+        Contact c1 = new Contact(name, lname, city, state, email, phone, zip);
+        adBook.add(c1);
+        System.out.println("Contact is added");
+    }
 
-        System.out.println("Welcome to the Address Book System");
-
-        while (true) {
-            System.out.println(
-                    "Enter 1 to create a new Address Book" +
-                    "\nEnter 2 to select an Address Book" +
-                    "\nEnter 3 to add a contact to the selected Address Book" +
-                    "\nEnter 4 to display contacts in the selected Address Book" +
-                    "\nEnter 5 to add multiple contacts" +
-                    "\nEnter 0 to exit"
-            );
-            int input = sc.nextInt();
-
-            switch (input) {
-                case 1 -> {
-                    System.out.println("Enter the name of the new Address Book:");
-                    String name = sc.next();
-                    system.addAddressBook(name);
-                }
-                case 2 -> {
-                    system.displayAddressBooks();
-                    System.out.println("Enter the name of the Address Book to select:");
-                    String name = sc.next();
-                    currentAddressBook = system.getAddressBook(name);
-                    if (currentAddressBook == null) {
-                        System.out.println("No Address Book found with the name '" + name + "'.");
-                    } else {
-                        System.out.println("Address Book '" + name + "' selected.");
-                    }
-                }
-                case 3 -> {
-                    if (currentAddressBook != null) {
-                        currentAddressBook.createContact();
-                    } else {
-                        System.out.println("No Address Book is currently selected. Please select or create one first.");
-                    }
-                }
-                case 4 -> {
-                    if (currentAddressBook != null) {
-                        currentAddressBook.display();
-                    } else {
-                        System.out.println("No Address Book is currently selected. Please select or create one first.");
-                    }
-                }
-                case 5 -> {
-                    if (currentAddressBook != null) {
-                        currentAddressBook.createMultipleContacts();
-                    } else {
-                        System.out.println("No Address Book is currently selected. Please select or create one first.");
-                    }
-                }
-                case 0 -> {
-                    System.out.println("Exiting the Address Book System. Bye Bye, Visit Again!");
-                    System.exit(0);
-                    sc.close();
-                    return;
-                }
-                default -> System.out.println("Wrong Input");
+    // USE CASE 2
+    public void editContact(String firstName, String lastName) {
+        for (Contact contact : adBook) {
+            if (contact.firstName.equalsIgnoreCase(firstName) && contact.lastName.equalsIgnoreCase(lastName)) {
+                Scanner sc = new Scanner(System.in);
+                System.out.println("Enter updated City");
+                contact.city = sc.next();
+                System.out.println("Enter updated State");
+                contact.state = sc.next();
+                System.out.println("Enter updated Email");
+                contact.email = sc.next();
+                System.out.println("Enter updated Phone");
+                contact.phone = sc.nextLong();
+                System.out.println("Enter updated Zip");
+                contact.zip = sc.nextInt();
+                System.out.println("Contact updated successfully");
+                return;
             }
         }
+        System.out.println("Contact not found");
     }
 }
